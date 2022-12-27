@@ -1,0 +1,12 @@
+.App {
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    height: 500px;
+    width: 90%;
+
+}
+.login-form {
+    width: 100px;
+    height: 100px;
+}
