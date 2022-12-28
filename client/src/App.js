@@ -1,10 +1,8 @@
 import "./App.css";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 function App() {
   const [loginInfo, setLoginInfo] = useState({});
-  const [message, setMessage] = useState("");
-
 
   const handleChange = (event) => {
     const name = event.target.name;
@@ -13,19 +11,27 @@ function App() {
   };
   const handleSubmit = (event) => {
     event.preventDefault();
-    alert(`Username: ${loginInfo.username} password: ${loginInfo.password}`);
+    console.log(
+      `Username: ${loginInfo.username} password: ${loginInfo.password}`
+    );
+    fetch("http://localhost:8000/create_user", {
+      method: "post",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        username: loginInfo.username,
+        password: loginInfo.password,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        window.alert(data);
+      });
   };
-  useEffect(() => {
-    fetch("http://localhost:8000/message")
-      .then((res) => res.json())
-      .then((data) => setMessage(data.message));
-  }, []);
 
   return (
     <div className="App">
       <div className="login-form">
-      <h3>Please login: </h3>
-      <h1>{message}</h1>
+        <h3>Please signup: </h3>
         <form onSubmit={handleSubmit}>
           <label>
             Username:

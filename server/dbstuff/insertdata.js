@@ -1,6 +1,6 @@
 const { pool } = require("./db");
 
-async function insertData() {
+export async function insertData() {
   const [name, color] = process.argv.slice(2);
   try {
     const res = await pool.query(
@@ -13,4 +13,3 @@ async function insertData() {
   }
 }
 
-insertData();
