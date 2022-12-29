@@ -3,7 +3,7 @@ import { getUsers,createUser } from '../controllers/users.js';
 
 const router = express.Router();
 
-//localhost:5000/posts
+//localhost:5000/users
 router.get("/", getUsers);
 router.post("/", createUser);
 

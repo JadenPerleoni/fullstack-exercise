@@ -1,7 +1,7 @@
-export default (users = [], action) => {
+export default (users = ['yo whore'], action) => {
     switch (action.type) {
         case 'FETCH_ALL':
-            return users;
+            return action.payload;
         case 'CREATE':
             return users;
     

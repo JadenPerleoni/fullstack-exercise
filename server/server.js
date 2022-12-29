@@ -5,9 +5,9 @@ import mongoose from 'mongoose';
 import users from './routes/users.js'
 const app = express();
 
-app.use("/users", users);
 app.use(bodyParser.json());
 app.use(cors());
+app.use("/users", users);
 
 const uri =
   "mongodb+srv://jadenperleoni:swaggoat12@fullstack-excersise.d8dsh10.mongodb.net/?retryWrites=true&w=majority";
