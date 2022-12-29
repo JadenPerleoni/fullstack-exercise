@@ -1,48 +1,23 @@
-const express = require("express");
-const bodyParser = require("body-parser");
-const { Pool } = require("pg");
-const cors = require("cors");
-
-
-const pool = new Pool({
-  user: "Jadem",
-  database: "members",
-  password: "swaggoat12",
-  port: 5432,
-  host: "localhost",
-});
-
+import express from 'express';
+import bodyParser from 'body-parser';
+import cors from 'cors';
+import mongoose from 'mongoose';
+import postRoutes from './routes/posts.js'
 const app = express();
+
+app.use("/posts", postRoutes);
+app.use(bodyParser.json());
 app.use(cors());
 
-app.use(bodyParser.json());
+const uri =
+  "mongodb+srv://jadenperleoni:swaggoat12@fullstack-excersise.d8dsh10.mongodb.net/?retryWrites=true&w=majority";
+const PORT = process.env.PORT || 5000;
 
-app.get("/message", (req, res) => {
-  res.json({ message: "Hello from server!" });
-});
+mongoose.set("strictQuery", false);
 
-app.post("/create_user", (req, res) => {
-  username = req.body.username;
-  password = req.body.password;
-
-  console.log(username);
-  console.log(password);
-
-
-  if (!username) return res.status(400).json("Username cant be blank");
-  if (!password) return res.status(400).json("Password cant be blank");
-
-
-  pool.query("INSERT INTO users (name, password) VALUES ($1, $2) ", [username,password], function (err, rows) {
-    if (err) {
-      res.status(400).json("Unable to add");
-      console.log("Error inserting : %s ", err);
-    } else {
-      res.status(200).json("User added succesfully");
-    }
-  });
-});
-
-app.listen(8000, () => {
-  console.log(`Server is running on port 8000.`);
-});
+mongoose
+  .connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() =>
+    app.listen(PORT, () => console.log(`Server running on port ${PORT}`))
+  )
+  .catch((error) => console.log(error));
