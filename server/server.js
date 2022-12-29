@@ -2,10 +2,10 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import mongoose from 'mongoose';
-import postRoutes from './routes/posts.js'
+import users from './routes/users.js'
 const app = express();
 
-app.use("/posts", postRoutes);
+app.use("/users", users);
 app.use(bodyParser.json());
 app.use(cors());
 
