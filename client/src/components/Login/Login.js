@@ -2,7 +2,7 @@ import { useState } from "react";
 import "../../App.css";
 
 function Login() {
-  const [loginInfo, setLoginInfo] = useState({});
+  const [loginInfo, setLoginInfo] = useState();
 
   const handleChange = (event) => {
     const name = event.target.name;
