@@ -1,8 +1,11 @@
 import UserInfo from "../models/userInfo.js";
 
 export const getUsers = async (req, res) => {
+  const filter = req.body;
+
+  console.log(filter);
   try {
-    const users = await UserInfo.find();
+    const users = await UserInfo.findOne();
     console.log(users);
     res.status(200).json(users);
   } catch (error) {
