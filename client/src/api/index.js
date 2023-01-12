@@ -4,4 +4,6 @@ const url = 'http://localhost:5000/users'
 
 export const fetchUsers = () => axios.get(url);
 export const createUser = (newUser) => axios.post(url, newUser); 
+export const fetchUser = (id) => axios.get(`${url}/${id}`);
+
 

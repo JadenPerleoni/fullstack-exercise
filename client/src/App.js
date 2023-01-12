@@ -9,7 +9,6 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getUsers({id: "jp420"}));
   }, [dispatch]);
   return (
     <div>

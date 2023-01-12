@@ -5,6 +5,8 @@ export default (users = [""], action) => {
     case "CREATE":
       return [...users, action.payload];
 
+    case "FETCH_ONE":
+      return users.filter((filter) => filter.userId !== action.payload)
     default:
       return users;
   }

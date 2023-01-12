@@ -18,3 +18,13 @@ export const createUser = (user) => async (dispatch) => {
   }
 
 };
+
+export const getUser = (id) => async (dispatch) => {
+  try {
+    const {data} =  await api.fetchUser(id);
+
+    dispatch({ type: "FETCH_ONE", payload: data });
+  } catch (error) {
+    console.log(error.message);
+  }
+};

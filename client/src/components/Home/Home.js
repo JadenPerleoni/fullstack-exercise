@@ -13,7 +13,6 @@ function Home() {
   const handleSubmit = (event) => {
     event.preventDefault();
     dispatch(createUser(transactionInfo))
-    console.log('working!')
   };
 
   
