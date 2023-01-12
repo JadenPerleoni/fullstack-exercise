@@ -11,7 +11,6 @@ export const getUsers = async (req, res) => {
 
 export const getUser = async (req, res) => {
   const userId  = req.body;
-  console.log(userId)
 
   try {
     const users = await UserInfo.findOne(userId);
@@ -23,7 +22,6 @@ export const getUser = async (req, res) => {
 
 export const createUser = async (req, res) => {
   const user = req.body;
-  console.log(user);
   const newUser = new UserInfo(user);
 
   try {

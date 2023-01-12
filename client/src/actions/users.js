@@ -20,7 +20,6 @@ export const createUser = (user) => async (dispatch) => {
 };
 
 export const getUser = (id) => async (dispatch) => {
-  console.log(id);
   try {
     const {data} =  await api.fetchUser(id);
 

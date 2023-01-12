@@ -1,45 +1,57 @@
 import { useState } from "react";
-import "../../App.css";
+import { useDispatch } from "react-redux";
+import { createUser } from "../../actions/users";
+
 
 function Login() {
-  const [loginInfo, setLoginInfo] = useState();
-
-  const handleChange = (event) => {
-    const name = event.target.name;
-    const value = event.target.value;
-    setLoginInfo((values) => ({ ...values, [name]: value }));
-  };
+  const dispatch = useDispatch()
+  const [transactionInfo, setTransactionInfo] = useState({
+    userId: "",
+    accountNumber: 0,
+    balance: 0,
+  });
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(
-      `Username: ${loginInfo.username} password: ${loginInfo.password}`
-    );
+    dispatch(createUser(transactionInfo))
   };
 
+  
+
   return (
-    <div className="login-form">
-      <h3>Please login: </h3>
+    <div className="App">
+      <div className="login-form">
+      <h1>Create transaction</h1>
       <form onSubmit={handleSubmit}>
         <label>
-          Username:
+          User id:
           <input
             type="text"
-            name="username"
-            value={loginInfo.username || ""}
-            onChange={handleChange}
+            name="userId"
+            value={transactionInfo.userId || ""}
+            onChange={(e) => setTransactionInfo({...transactionInfo, userId: e.target.value})}
           />
         </label>
         <label>
-          Password:
+          Account number:
           <input
-            type="password"
-            name="password"
-            value={loginInfo.password || ""}
-            onChange={handleChange}
+            type="text"
+            name="accountNumber"
+            value={transactionInfo.accountNumber || ""}
+            onChange={(e) => setTransactionInfo({...transactionInfo, accountNumber: e.target.value})}
+          />
+        </label>
+        <label>
+          Balance:
+          <input
+            type="text"
+            name="balance"
+            value={transactionInfo.balance || ""}
+            onChange={(e) => setTransactionInfo({...transactionInfo, balance: e.target.value})}
           />
         </label>
         <input type="submit" value="Submit" />
       </form>
+    </div>
     </div>
   );
 }

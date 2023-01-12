@@ -1,56 +1,20 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { createUser } from "../../actions/users";
-
+import { useSelector } from "react-redux";
 
 function Home() {
-  const dispatch = useDispatch()
-  const [transactionInfo, setTransactionInfo] = useState({
-    userId: "",
-    accountNumber: 0,
-    balance: 0,
-  });
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    dispatch(createUser(transactionInfo))
-  };
 
-  
 
+
+
+  // THIS IS HOW WE get the data from the DISPATCH
+  const users = useSelector((state) => state.users);
   return (
     <div>
-      <h1>Create transaction</h1>
-      <form onSubmit={handleSubmit}>
-        <label>
-          User id:
-          <input
-            type="text"
-            name="userId"
-            value={transactionInfo.userId || ""}
-            onChange={(e) => setTransactionInfo({...transactionInfo, userId: e.target.value})}
-          />
-        </label>
-        <label>
-          Account number:
-          <input
-            type="text"
-            name="accountNumber"
-            value={transactionInfo.accountNumber || ""}
-            onChange={(e) => setTransactionInfo({...transactionInfo, accountNumber: e.target.value})}
-          />
-        </label>
-        <label>
-          Balance:
-          <input
-            type="text"
-            name="balance"
-            value={transactionInfo.balance || ""}
-            onChange={(e) => setTransactionInfo({...transactionInfo, balance: e.target.value})}
-          />
-        </label>
-        <input type="submit" value="Submit" />
-      </form>
+      <h3> Logged in as {users.userId}</h3>
+      <h3> Account number: {users.accountNumber}</h3>
+
+      <h3> Your balance is: ${users.balance}</h3>
     </div>
   );
 }
+
 export default Home;
