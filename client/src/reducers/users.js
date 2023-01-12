@@ -6,7 +6,7 @@ export default (users = [""], action) => {
       return [...users, action.payload];
 
     case "FETCH_ONE":
-      return users.filter((filter) => filter.userId !== action.payload)
+      return action.payload;
     default:
       return users;
   }

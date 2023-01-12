@@ -1,7 +1,7 @@
 import "./App.css";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { getUsers } from "./actions/users";
+import { getUser } from "./actions/users";
 import Home from "./components/Home/Home";
 import Users from "./components/Users/Users";
 
@@ -9,6 +9,7 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    dispatch(getUser({"userId": "yobro"}))
   }, [dispatch]);
   return (
     <div>

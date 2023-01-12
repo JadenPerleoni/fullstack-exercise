@@ -10,12 +10,12 @@ export const getUsers = async (req, res) => {
 };
 
 export const getUser = async (req, res) => {
-  const { userId } = req.body;
+  const userId  = req.body;
+  console.log(userId)
 
   try {
-    console.log(userId);
     const users = await UserInfo.findOne(userId);
-    res.status(200).json({ hello: "messaeg" });
+    res.status(200).json(users);
   } catch (error) {
     res.status(404).json({ message: error.message });
   }
@@ -23,6 +23,7 @@ export const getUser = async (req, res) => {
 
 export const createUser = async (req, res) => {
   const user = req.body;
+  console.log(user);
   const newUser = new UserInfo(user);
 
   try {
