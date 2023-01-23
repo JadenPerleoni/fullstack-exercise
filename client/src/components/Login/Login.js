@@ -1,18 +1,15 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { createUser } from "../../actions/users";
 
 
 function Login() {
-  const dispatch = useDispatch()
-  const [transactionInfo, setTransactionInfo] = useState({
-    userId: "",
-    accountNumber: 0,
-    balance: 0,
+  const [loginInfo, setLoginInfo] = useState({
+    username: "",
+    password: "",
   });
   const handleSubmit = (event) => {
     event.preventDefault();
-    dispatch(createUser(transactionInfo))
+    // TODO: JWT??? AND HANDLE LOGIN
+    console.log(loginInfo);
   };
 
   
@@ -20,33 +17,24 @@ function Login() {
   return (
     <div className="App">
       <div className="login-form">
-      <h1>Create transaction</h1>
+      <h1>Login</h1>
       <form onSubmit={handleSubmit}>
         <label>
-          User id:
+          Username:
           <input
             type="text"
-            name="userId"
-            value={transactionInfo.userId || ""}
-            onChange={(e) => setTransactionInfo({...transactionInfo, userId: e.target.value})}
+            name="username"
+            value={loginInfo.username || ""}
+            onChange={(e) => setLoginInfo({...loginInfo, username: e.target.value})}
           />
         </label>
         <label>
-          Account number:
+          Password:
           <input
-            type="text"
-            name="accountNumber"
-            value={transactionInfo.accountNumber || ""}
-            onChange={(e) => setTransactionInfo({...transactionInfo, accountNumber: e.target.value})}
-          />
-        </label>
-        <label>
-          Balance:
-          <input
-            type="text"
-            name="balance"
-            value={transactionInfo.balance || ""}
-            onChange={(e) => setTransactionInfo({...transactionInfo, balance: e.target.value})}
+            type="password"
+            name="password"
+            value={loginInfo.password || ""}
+            onChange={(e) => setLoginInfo({...loginInfo, password: e.target.value})}
           />
         </label>
         <input type="submit" value="Submit" />

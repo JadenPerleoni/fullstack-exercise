@@ -1,8 +1,12 @@
-import express from 'express';
-import bodyParser from 'body-parser';
-import cors from 'cors';
-import mongoose from 'mongoose';
-import users from './routes/users.js'
+import express from "express";
+import bodyParser from "body-parser";
+import cors from "cors";
+import mongoose from "mongoose";
+import users from "./routes/users.js";
+
+
+
+
 const app = express();
 
 app.use(bodyParser.json());
