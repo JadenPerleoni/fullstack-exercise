@@ -71,12 +71,13 @@ export const validateToken = async (req, res) => {
   }
 };
 
-export const login = async (req, res) => {
+export const login = async (req, res, next) => {
   let { username, password } = req.body;
+  let existingUser;
+  console.log(req.body);
 
-  let user;
   try {
-    user = await UserLogin.findOne({ username: username });
+    existingUser = await UserLogin.findOne({ username: username });
   } catch {
     const error = new Error("Error! Something went wrong.");
     return next(error);
@@ -85,4 +86,26 @@ export const login = async (req, res) => {
     const error = Error("Invalid login");
     return next(error);
   }
+  let token;
+  try {
+    //Creating jwt token
+    token = jwt.sign(
+      { userId: existingUser.id, username: existingUser.username },
+      "secretkeyappearshere",
+      { expiresIn: "1h" }
+    );
+  } catch (err) {
+    console.log(err);
+    const error = new Error("Error! Something went wrong.");
+    return next(error);
+  }
+
+  res.status(200).json({
+    success: true,
+    data: {
+      userId: existingUser.id,
+      username: existingUser.username,
+      token: token,
+    },
+  });
 };
