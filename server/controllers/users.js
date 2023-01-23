@@ -1,8 +1,8 @@
-import UserInfo from "../models/userInfo.js";
+import UserLogin from "../models/userInfo.js";
 
 export const getUsers = async (req, res) => {
   try {
-    const users = await UserInfo.find();
+    const users = await UserLogin.find();
     res.status(200).json(users);
   } catch (error) {
     res.status(404).json({ message: error.message });
@@ -13,7 +13,7 @@ export const getUser = async (req, res) => {
   const userId  = req.body;
 
   try {
-    const users = await UserInfo.findOne(userId);
+    const users = await UserLogin.findOne(userId);
     res.status(200).json(users);
   } catch (error) {
     res.status(404).json({ message: error.message });
@@ -22,7 +22,8 @@ export const getUser = async (req, res) => {
 
 export const createUser = async (req, res) => {
   const user = req.body;
-  const newUser = new UserInfo(user);
+  const newUser = new UserLogin(user);
+  console.log(user);
 
   try {
     await newUser.save();

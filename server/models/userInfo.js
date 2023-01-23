@@ -1,14 +1,10 @@
 import mongoose from "mongoose";
 
 const userSchema = mongoose.Schema({
-  userId: String,
-  accountNumber: String,
-  balance: {
-    type: Number,
-    default: 0,
-  },
+  username: String,
+  password: String,
 });
 
-const UserInfo = mongoose.model('UserInfo',userSchema);
+const UserLogin = mongoose.model('UserLogin',userSchema);
 
-export default UserInfo;
+export default UserLogin;
