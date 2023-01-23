@@ -1,6 +1,7 @@
 import UserLogin from "../models/userInfo.js";
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
+import mongoose from "mongoose";
 
 dotenv.config();
 
@@ -55,8 +56,8 @@ export const validateToken = async (req, res) => {
 
   try {
     const token = req.header(tokenHeaderKey);
-
     console.log(token);
+
     const verified = jwt.verify(token, jwtSecretKey);
     if (verified) {
       return res.send("Successfully Verified");
@@ -67,5 +68,21 @@ export const validateToken = async (req, res) => {
   } catch (error) {
     // Access Denied
     return res.status(401).send(error);
+  }
+};
+
+export const login = async (req, res) => {
+  let { username, password } = req.body;
+
+  let user;
+  try {
+    user = await UserLogin.findOne({ username: username });
+  } catch {
+    const error = new Error("Error! Something went wrong.");
+    return next(error);
+  }
+  if (!existingUser || existingUser.password != password) {
+    const error = Error("Invalid login");
+    return next(error);
   }
 };
