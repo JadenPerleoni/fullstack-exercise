@@ -39,38 +39,6 @@ export const createUser = async (req, res) => {
   }
 };
 
-export const generateToken = async (req, res) => {
-  const userData = req.body;
-  console.log(userData);
-
-  let jwtSecretKey = process.env.JWT_SECRET_KEY;
-
-  const token = jwt.sign(userData, jwtSecretKey);
-
-  res.send(token);
-};
-
-export const validateToken = async (req, res) => {
-  let tokenHeaderKey = process.env.TOKEN_HEADER_KEY;
-  let jwtSecretKey = process.env.JWT_SECRET_KEY;
-
-  try {
-    const token = req.header(tokenHeaderKey);
-    console.log(token);
-
-    const verified = jwt.verify(token, jwtSecretKey);
-    if (verified) {
-      return res.send("Successfully Verified");
-    } else {
-      // Access Denied
-      return res.status(401).send(error);
-    }
-  } catch (error) {
-    // Access Denied
-    return res.status(401).send(error);
-  }
-};
-
 export const login = async (req, res, next) => {
   let { username, password } = req.body;
   let existingUser;
@@ -108,4 +76,25 @@ export const login = async (req, res, next) => {
       token: token,
     },
   });
+};
+
+export const validate = async (req, res) => {
+  const token = req.headers.authorization.split(" ")[1];
+  if (!token) {
+    res
+      .status(200)
+      .json({ success: false, message: "Error! Token was not provided." });
+  }
+  try {
+    const decodedToken = jwt.verify(token, "secretkeyappearshere");
+    res
+      .status(200)
+      .json({
+        success: true,
+        data: { userId: decodedToken.userId, username: decodedToken.username },
+      });
+  } catch (error) {
+    res.status(401).json(error);
+  }
+
 };
