@@ -1,20 +1,25 @@
-import { useSelector } from "react-redux";
+import { validate } from "../../actions/users";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
+function getToken() {
+  const tokenString = sessionStorage.getItem("token");
+  const userToken = JSON.parse(tokenString);
+  return userToken;
+}
 
 function Home() {
+  const dispatch = useDispatch();
 
+  const token = getToken();
+  console.log(token)
 
-
-
-  // THIS IS HOW WE get the data from the DISPATCH
-  const users = useSelector((state) => state.users);
-  return (
-    <div>
-      <h3> Logged in as {users.userId}</h3>
-      <h3> Account number: {users.accountNumber}</h3>
-
-      <h3> Your balance is: ${users.balance}</h3>
-    </div>
-  );
+  useEffect(() => {
+    dispatch(validate(token));
+  },
+    [dispatch]);
+  const users = useSelector((state) => state.token);
+  return <div>Hello,</div>;
 }
 
 export default Home;

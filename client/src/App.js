@@ -3,12 +3,9 @@ import Login from "./components/Login/Login";
 import Home from "./components/Home/Home";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-function App() {
-  // const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   dispatch(getUser({"userId": "yobro"}))
-  // }, [dispatch]);
+function App() {
+
   return (
     <BrowserRouter>
       <Routes>

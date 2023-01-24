@@ -1,7 +1,6 @@
 import UserLogin from "../models/userInfo.js";
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
-import mongoose from "mongoose";
 
 dotenv.config();
 
@@ -97,7 +96,7 @@ export const validate = async (req, res) => {
         data: { userId: decodedToken.userId, username: decodedToken.username },
       });
   } catch (error) {
-    res.status(401).json(error);
+    res.status(401).json(error.message);
   }
 
 };

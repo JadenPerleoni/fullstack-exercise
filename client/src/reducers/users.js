@@ -7,6 +7,9 @@ export default (users = [""], action) => {
 
     case "FETCH_ONE":
       return action.payload;
+    case "LOGIN":
+      return [...users, action.payload];
+
     default:
       return users;
   }

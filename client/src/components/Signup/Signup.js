@@ -16,7 +16,7 @@ function Signup() {
       dispatch(createUser(userInfo))
     };
   
-    
+    const users = useSelector((state) => state.users);
   
     return (
       <div className="App">
@@ -44,6 +44,7 @@ function Signup() {
           <input type="submit" value="Submit" />
         </form>
       </div>
+      
       </div>
     );
 }
