@@ -18,8 +18,7 @@ function Home() {
     dispatch(validate(token));
   },
     [dispatch]);
-  const users = useSelector((state) => state.token);
-  return <div>Hello,</div>;
+  return <div>Hello, </div>;
 }
 
 export default Home;

@@ -4,26 +4,6 @@ import jwt from "jsonwebtoken";
 
 dotenv.config();
 
-export const getUsers = async (req, res) => {
-  try {
-    const users = await UserLogin.find();
-    res.status(200).json(users);
-  } catch (error) {
-    res.status(404).json({ message: error.message });
-  }
-};
-
-export const getUser = async (req, res) => {
-  const userId = req.body;
-
-  try {
-    const users = await UserLogin.findOne(userId);
-    res.status(200).json(users);
-  } catch (error) {
-    res.status(404).json({ message: error.message });
-  }
-};
-
 export const createUser = async (req, res) => {
   const user = req.body;
   const newUser = new UserLogin(user);
@@ -44,7 +24,6 @@ export const createUser = async (req, res) => {
 export const login = async (req, res, next) => {
   let { username, password } = req.body;
   let existingUser;
-  console.log(req.body);
 
   try {
     existingUser = await UserLogin.findOne({ username: username });
@@ -95,6 +74,7 @@ export const validate = async (req, res) => {
         success: true,
         data: { userId: decodedToken.userId, username: decodedToken.username },
       });
+      console.log(`${decodedToken.username} has made an api request`)
   } catch (error) {
     res.status(401).json(error.message);
   }

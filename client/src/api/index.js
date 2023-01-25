@@ -8,6 +8,9 @@ export const fetchUser = (id) => axios.post(url, id);
 export const login = (user) =>
   axios.post(`${url}/login`, user).then((res) => {
     // Stores the auth token in session storage
-    sessionStorage.setItem('token', JSON.stringify(res.data.data.token));
+    sessionStorage.setItem("token", JSON.stringify(res.data.data.token));
   });
-export const validate = (token) => axios.get(`${url}/validate`,token)
+export const validate = (token) =>
+  axios.get(`${url}/validate`, { headers: {
+    Authorization: `Bearer ${token}`
+  } });
