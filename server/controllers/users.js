@@ -59,24 +59,24 @@ export const login = async (req, res, next) => {
   });
 };
 
-export const validate = async (req, res) => {
+export const validate = async (req, res,next) => {
   const token = req.headers.authorization.split(" ")[1];
   if (!token) {
-    res
+   return res
       .status(200)
       .json({ success: false, message: "Error! Token was not provided." });
   }
   try {
     const decodedToken = jwt.verify(token, "secretkeyappearshere");
-    res
-      .status(200)
-      .json({
-        success: true,
-        data: { userId: decodedToken.userId, username: decodedToken.username },
-      });
       console.log(`${decodedToken.username} has made an api request`)
+      next();
   } catch (error) {
-    res.status(401).json(error.message);
+    return res.status(401).json(error.message);
   }
-
+      
 };
+
+export const test = async (req,res) => {
+  res.status(200).json("helo");
+
+}

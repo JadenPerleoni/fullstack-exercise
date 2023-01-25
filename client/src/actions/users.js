@@ -13,9 +13,10 @@ export const createUser = (user) => async (dispatch) => {
 
 export const login = (userInfo) => async (dispatch) => {
   try {
-    await api.login(userInfo);
+    const {data} = await api.login(userInfo);
 
-    // dispatch({ type: "LOGIN", payload: data });
+    dispatch({ type: "LOGIN", payload: data });
+
   } catch (error) {
     console.log(error.message);
   }

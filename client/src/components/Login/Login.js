@@ -13,12 +13,14 @@ function Login() {
     password: "",
   });
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     // TODO: JWT??? AND HANDLE LOGIN
     console.log(loginInfo);
 
     dispatch(login(loginInfo));
+    setTimeout(1000);
+  
     navigate(`Home`)
 
 

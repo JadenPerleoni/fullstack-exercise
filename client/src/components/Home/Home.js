@@ -1,6 +1,3 @@
-import { validate } from "../../actions/users";
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 
 function getToken() {
   const tokenString = sessionStorage.getItem("token");
@@ -8,17 +5,19 @@ function getToken() {
   return userToken;
 }
 
+function getUser() {
+  let username = sessionStorage.getItem("username");
+  username = JSON.parse(username);
+  return username;
+}
+
 function Home() {
-  const dispatch = useDispatch();
+  const username = getUser();
 
   const token = getToken();
   console.log(token)
 
-  useEffect(() => {
-    dispatch(validate(token));
-  },
-    [dispatch]);
-  return <div>Hello, </div>;
+  return <div>Hello, {username}</div>;
 }
 
 export default Home;
