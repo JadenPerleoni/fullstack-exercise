@@ -20,7 +20,7 @@ function Home() {
     amount: "",
   });
   const client = axios.create({
-    baseURL: "http://localhost:5000/users/createTransaction",
+    baseURL: "http://localhost:5000/users/createtransaction",
   });
 
   const token = getToken();
@@ -37,13 +37,14 @@ function Home() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    console.log(token);
     client
-      .post("", {
+      .post("", form , {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
-      .then((res) => console.log(res.json()));
+      .then((res) => console.log(res));
   };
 
   // TODO: CREATE TRANSACTION ROUTE

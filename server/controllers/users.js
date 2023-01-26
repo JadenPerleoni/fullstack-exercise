@@ -62,12 +62,14 @@ export const login = async (req, res, next) => {
 
 export const validate = async (req, res, next) => {
   console.log(req.headers.authorization);
-  const token = req.headers.authorization.split(" ")[1];
-  if (!token) {
-    return res
-      .status(200)
-      .json({ success: false, message: "Error! Token was not provided." });
+  let token;
+  try {
+    token = req.headers.authorization.split(" ")[1];
+  } catch (error) {
+        return res.status(200).json("Token was not provided")   
   }
+  
+
   try {
     const decodedToken = jwt.verify(token, "secretkeyappearshere");
     console.log(`${decodedToken.username} has made an api request`);
