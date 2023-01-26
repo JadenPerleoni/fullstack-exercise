@@ -18,11 +18,9 @@ export const createUser = async (req, res) => {
   }
 };
 
-
 // Checks if user exists and if password is correct, then generates jwt
 // TODO: Store in browser to authenticate for every request.
 export const login = async (req, res, next) => {
-  
   let { username, password } = req.body;
   let existingUser;
 
@@ -50,7 +48,7 @@ export const login = async (req, res, next) => {
     return next(error);
   }
 
-  console.log(`${existingUser.username} has made an api request`)
+  console.log(`${existingUser.username} has logged in`);
 
   res.status(200).json({
     success: true,
@@ -62,24 +60,28 @@ export const login = async (req, res, next) => {
   });
 };
 
-export const validate = async (req, res,next) => {
+export const validate = async (req, res, next) => {
+  console.log(req.headers.authorization);
   const token = req.headers.authorization.split(" ")[1];
   if (!token) {
-   return res
+    return res
       .status(200)
       .json({ success: false, message: "Error! Token was not provided." });
   }
   try {
     const decodedToken = jwt.verify(token, "secretkeyappearshere");
-      console.log(`${decodedToken.username} has made an api request`)
-      next();
+    console.log(`${decodedToken.username} has made an api request`);
+    next();
   } catch (error) {
     return res.status(401).json(error.message);
   }
-      
 };
 
-export const test = async (req,res) => {
+export const test = async (req, res) => {
   res.status(200).json("helo");
-
-}
+};
+export const createTransaction = async (req, res) => {
+  const { amount } = req.body;
+  console.log(amount);
+  res.status(201).json("good job!");
+};

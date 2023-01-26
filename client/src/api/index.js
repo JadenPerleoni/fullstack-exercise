@@ -23,3 +23,11 @@ export const test = (token) =>
       },
     })
     .then((res) => res.json());
+export const createTransaction = (token) =>
+  axios
+    .post(`${url}/createtransaction`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .then((res) => res.json());

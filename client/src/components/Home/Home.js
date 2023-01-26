@@ -16,53 +16,56 @@ function getUser() {
 }
 
 function Home() {
-  const [form, setForm] = useState([]);
+  const [form, setForm] = useState({
+    amount: "",
+  });
   const client = axios.create({
-    baseURL: "http://localhost:5000/users/test",
+    baseURL: "http://localhost:5000/users/createTransaction",
   });
 
   const token = getToken();
-  useEffect(() => {
+  // useEffect(() => {
+  //   client.post("", {
+  //     headers: {
+  //       Authorization: `Bearer ${token}`,
+  //     },
+  //     amount: form.amount,
+  //   });
+  // }, []);
+
+  const username = getUser();
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
     client
-      .get('',{
+      .post("", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
-      .then((response) => {
-        setData(response.data);
-      });
-  }, []);
-
-  console.log(data);
-
-  const username = getUser();
-
-const handleSubmit = () => {
-
-}
+      .then((res) => console.log(res.json()));
+  };
 
   // TODO: CREATE TRANSACTION ROUTE
   return (
     <div className="App">
-    <div className="login-form">
-      <h1>Create Transaction</h1>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Amount:
-          <input
-            type="text"
-            name="username"
-            value={loginInfo.username || ""}
-            onChange={(e) =>
-              setForm({ ...form, username: e.target.value })
-            }
-          />
-        </label>
-        <input type="submit" value="Submit" />
-      </form>
+      <h2>Hello, {username}</h2>
+      <div className="login-form">
+        <h1>Create Transaction</h1>
+        <form onSubmit={handleSubmit}>
+          <label>
+            Amount:
+            <input
+              type="text"
+              name="amount"
+              value={form.amount || ""}
+              onChange={(e) => setForm({ ...form, amount: e.target.value })}
+            />
+          </label>
+          <input type="submit" value="Submit" />
+        </form>
+      </div>
     </div>
-  </div>
   );
 }
 
