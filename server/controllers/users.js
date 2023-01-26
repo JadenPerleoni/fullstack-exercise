@@ -22,6 +22,7 @@ export const createUser = async (req, res) => {
 // Checks if user exists and if password is correct, then generates jwt
 // TODO: Store in browser to authenticate for every request.
 export const login = async (req, res, next) => {
+  
   let { username, password } = req.body;
   let existingUser;
 
@@ -48,6 +49,8 @@ export const login = async (req, res, next) => {
     const error = new Error("Error! Something went wrong.");
     return next(error);
   }
+
+  console.log(`${existingUser.username} has made an api request`)
 
   res.status(200).json({
     success: true,

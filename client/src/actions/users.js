@@ -10,13 +10,9 @@ export const createUser = (user) => async (dispatch) => {
   }
 };
 
-
-export const login = (userInfo) => async (dispatch) => {
+export const login = (userInfo) => async () => {
   try {
-    const {data} = await api.login(userInfo);
-
-    dispatch({ type: "LOGIN", payload: data });
-
+    await api.login(userInfo);
   } catch (error) {
     console.log(error.message);
   }
@@ -25,8 +21,17 @@ export const login = (userInfo) => async (dispatch) => {
 export const validate = (token) => async (dispatch) => {
   try {
     const { data } = await api.validate(token);
-    console.log(data)
+    console.log(data);
     dispatch({ type: "AUTH", payload: data });
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+export const test = () => async () => {
+  try {
+    await api.test();
+    console.log(`helo`);
   } catch (error) {
     console.log(error.message);
   }

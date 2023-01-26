@@ -19,7 +19,7 @@ function Login() {
     console.log(loginInfo);
 
     dispatch(login(loginInfo));
-    setTimeout(1000);
+   setTimeout(100000);
   
     navigate(`Home`)
 
