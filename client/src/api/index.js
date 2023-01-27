@@ -1,6 +1,6 @@
 import axios from "axios";
-
 const url = "http://localhost:5000/users/";
+
 
 export const createUser = (newUser) => axios.post(`${url}/create`, newUser);
 export const login = (user) =>
@@ -23,11 +23,9 @@ export const test = (token) =>
       },
     })
     .then((res) => res.json());
-export const createTransaction = (token) =>
-  axios
-    .post(`${url}/createtransaction`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-    .then((res) => res.json());
+export const createTransaction = (token,amount) =>
+  axios.post(`${url}/createtransaction`,amount, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });

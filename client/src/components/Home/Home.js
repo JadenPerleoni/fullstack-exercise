@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { test } from "../../actions/users";
+import {createTransaction} from "../../api/index.js"
 
 import axios from "axios";
 
@@ -19,32 +19,14 @@ function Home() {
   const [form, setForm] = useState({
     amount: "",
   });
-  const client = axios.create({
-    baseURL: "http://localhost:5000/users/createtransaction",
-  });
-
+ 
   const token = getToken();
-  // useEffect(() => {
-  //   client.post("", {
-  //     headers: {
-  //       Authorization: `Bearer ${token}`,
-  //     },
-  //     amount: form.amount,
-  //   });
-  // }, []);
-
   const username = getUser();
 
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log(token);
-    client
-      .post("", form , {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => console.log(res));
+   createTransaction(token,form)
   };
 
   // TODO: CREATE TRANSACTION ROUTE
