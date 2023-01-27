@@ -1,5 +1,5 @@
 import express from "express";
-import { createUser, login,validate,test,createTransaction } from "../controllers/users.js";
+import { createUser, login,validate,createTransaction } from "../controllers/users.js";
 
 const router = express.Router();
 
@@ -7,7 +7,6 @@ const router = express.Router();
 router.post("/create", createUser);
 router.post("/login", login);
 router.get("/validate", validate);
-router.get("/test",validate, test);
 router.post("/createtransaction",validate, createTransaction);
 
 

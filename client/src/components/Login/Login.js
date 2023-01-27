@@ -15,7 +15,6 @@ function Login() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    // TODO: JWT??? AND HANDLE LOGIN
     console.log(loginInfo);
 
     dispatch(login(loginInfo));

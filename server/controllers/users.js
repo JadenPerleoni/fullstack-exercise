@@ -1,4 +1,6 @@
 import UserLogin from "../models/userInfo.js";
+import TransactionData from "../models/transactionData.js";
+
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 
@@ -19,7 +21,6 @@ export const createUser = async (req, res) => {
 };
 
 // Checks if user exists and if password is correct, then generates jwt
-// TODO: Store in browser to authenticate for every request.
 export const login = async (req, res, next) => {
   let { username, password } = req.body;
   let existingUser;
@@ -61,7 +62,6 @@ export const login = async (req, res, next) => {
 };
 
 export const validate = async (req, res, next) => {
-  console.log(req.headers.authorization);
   let token;
   try {
     token = req.headers.authorization.split(" ")[1];
@@ -79,11 +79,17 @@ export const validate = async (req, res, next) => {
   }
 };
 
-export const test = async (req, res) => {
-  res.status(200).json("helo");
-};
 export const createTransaction = async (req, res) => {
-  const { amount } = req.body;
+  const amount  = req.body;
   console.log(amount);
-  res.status(201).json("good job!");
+  const transaction = new TransactionData(amount);
+
+  try {
+    await transaction.save();
+    res.status(201).json('Transaction was created successfully.');
+    console.log("transaction saved to db")
+
+  } catch(error) {
+    res.status(401).json(error.message)
+  }
 };
