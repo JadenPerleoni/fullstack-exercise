@@ -1,7 +1,6 @@
 import axios from "axios";
 const url = "http://localhost:5000/users/";
 
-
 export const createUser = (newUser) => axios.post(`${url}/create`, newUser);
 export const login = (user) =>
   axios.post(`${url}/login`, user).then((res) => {
@@ -15,17 +14,18 @@ export const validate = (token) =>
       Authorization: `Bearer ${token}`,
     },
   });
-export const test = (token) =>
-  axios
-    .get(`${url}/test`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-    .then((res) => res.json());
-export const createTransaction = (token,amount) =>
-  axios.post(`${url}/createtransaction`,amount, {
+export const createTransaction = (token, amount) =>
+  axios.post(`${url}/createtransaction`, amount, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
+  });
+
+export const getBalance = (token, username) =>
+  axios.post(`${url}balance`, username, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }).then((res) => {
+    return res.data;
   });

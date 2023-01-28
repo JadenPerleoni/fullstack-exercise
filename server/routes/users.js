@@ -1,5 +1,11 @@
 import express from "express";
-import { createUser, login,validate,createTransaction } from "../controllers/users.js";
+import {
+  createUser,
+  login,
+  validate,
+  createTransaction,
+  getBalance,
+} from "../controllers/users.js";
 
 const router = express.Router();
 
@@ -7,9 +13,8 @@ const router = express.Router();
 router.post("/create", createUser);
 router.post("/login", login);
 router.get("/validate", validate);
-router.post("/createtransaction",validate, createTransaction);
+router.post("/balance", validate, getBalance);
 
-
-
+router.post("/createtransaction", validate, createTransaction);
 
 export default router;

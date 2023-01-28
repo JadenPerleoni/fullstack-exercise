@@ -66,9 +66,8 @@ export const validate = async (req, res, next) => {
   try {
     token = req.headers.authorization.split(" ")[1];
   } catch (error) {
-        return res.status(200).json("Token was not provided")   
+    return res.status(200).json("Token was not provided");
   }
-  
 
   try {
     const decodedToken = jwt.verify(token, "secretkeyappearshere");
@@ -80,16 +79,25 @@ export const validate = async (req, res, next) => {
 };
 
 export const createTransaction = async (req, res) => {
-  const amount  = req.body;
-  console.log(amount);
+  const amount = req.body;
   const transaction = new TransactionData(amount);
 
   try {
     await transaction.save();
-    res.status(201).json('Transaction was created successfully.');
-    console.log("transaction saved to db")
+    res.status(201).json("Transaction was created successfully.");
+    console.log("transaction saved to db");
+  } catch (error) {
+    res.status(401).json(error.message);
+  }
+};
 
-  } catch(error) {
-    res.status(401).json(error.message)
+export const getBalance = async (req, res, next) => {
+  let { username } = req.body;
+  let existingUser;
+  try {
+    existingUser = await UserLogin.findOne({ username: username });
+    res.status(201).json(existingUser.balance);
+  } catch (error) {
+    return next(error);
   }
 };

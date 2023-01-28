@@ -1,11 +1,9 @@
 import { useState } from "react";
 import { login } from "../../api/index.js";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 
 function Login() {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [loginInfo, setLoginInfo] = useState({
@@ -15,7 +13,7 @@ function Login() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    login(loginInfo);
+    await login(loginInfo);
     navigate(`Home`)
 
 

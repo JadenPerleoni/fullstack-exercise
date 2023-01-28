@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { createTransaction } from "../../api/index.js";
+import { useState, useEffect } from "react";
+import { createTransaction,getBalance } from "../../api/index.js";
 
 function getToken() {
   const tokenString = sessionStorage.getItem("token");
@@ -17,6 +17,8 @@ function Home() {
   const [form, setForm] = useState({
     amount: "",
   });
+  const [balance, setBalance] = useState(0);
+
 
   const token = getToken();
   const username = getUser();
@@ -26,9 +28,17 @@ function Home() {
     createTransaction(token, form);
   };
 
+  useEffect(() => {
+    let response = getBalance(token,{username: username});
+    console.log(response);
+  },[]);
+
+  console.log(balance);
+
   return (
     <div>
       <h2>Hello, {username}</h2>
+
       <div className="App">
         <div className="login-form">
           <h1>Create Transaction</h1>
