@@ -80,8 +80,22 @@ export const validate = async (req, res, next) => {
 
 export const createTransaction = async (req, res) => {
 
-  console.log(req.body)
+  let createdBy = await UserLogin.findOne({ username: req.body.username });
+  
   const transaction = new TransactionData(req.body);
+
+  let newBalance;
+
+  // TODO: check the type of transaction and then subtract/add it from the user's balance.
+  if (req.body.type === "credit") {
+    try {
+        newBalance = parseInt((parseInt(createdBy.balance) + parseInt(req.body.amount)));
+
+    } catch(error) {
+      res.status(401).json(error.message);
+    }
+  }
+  
 
   try {
     await transaction.save();

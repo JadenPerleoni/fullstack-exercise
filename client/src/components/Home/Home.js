@@ -14,14 +14,17 @@ function getUser() {
 }
 
 function Home() {
+
+  const username = getUser();
+
   const [form, setForm] = useState({
     amount: "",
     type: "credit",
+    createdBy: username
   });
   const [balance, setBalance] = useState(0);
 
   const token = getToken();
-  const username = getUser();
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -34,7 +37,6 @@ function Home() {
     );
   }, []);
 
-  console.log(balance);
 
   return (
     <div>
