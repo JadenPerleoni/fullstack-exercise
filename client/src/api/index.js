@@ -26,6 +26,4 @@ export const getBalance = (token, username) =>
     headers: {
       Authorization: `Bearer ${token}`,
     },
-  }).then((res) => {
-    return res.data;
   });

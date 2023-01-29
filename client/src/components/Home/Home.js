@@ -29,8 +29,7 @@ function Home() {
   };
 
   useEffect(() => {
-    let response = getBalance(token,{username: username});
-    console.log(response);
+    getBalance(token,{username: username}).then((res) => setBalance(res.data));
   },[]);
 
   console.log(balance);
@@ -38,6 +37,7 @@ function Home() {
   return (
     <div>
       <h2>Hello, {username}</h2>
+      <h2>You have a balance of: {balance}</h2>
 
       <div className="App">
         <div className="login-form">
