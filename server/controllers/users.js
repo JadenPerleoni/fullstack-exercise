@@ -8,6 +8,7 @@ dotenv.config();
 
 export const createUser = async (req, res) => {
   const user = req.body;
+  console.log(user);
   const newUser = new UserLogin(user);
 
   try {

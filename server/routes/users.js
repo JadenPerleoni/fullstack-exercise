@@ -10,10 +10,11 @@ import {
 const router = express.Router();
 
 //localhost:5000/users
-router.post("/create", createUser);
+router.post("/create",validate, createUser);
 router.post("/login", login);
 router.get("/validate", validate);
 router.post("/balance", validate, getBalance);
+
 
 router.post("/createtransaction", validate, createTransaction);
 
