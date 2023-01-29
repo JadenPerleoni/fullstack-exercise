@@ -15,7 +15,7 @@ export const createAccount = async (req, res) => {
       { username: username },
       { $push: newAccount }
     );
-    res.status(201).json({ accounts: newAccount });
+    res.status(201).json({newAccount });
   } catch (error) {
     res.status(409).json({ message: error.message });
   }
@@ -112,15 +112,5 @@ export const createTransaction = async (req, res) => {
     } catch (error) {
       res.status(401).json(error.message);
     }
-  }
-};
-export const getBalance = async (req, res, next) => {
-  let { username } = req.body;
-  let existingUser;
-  try {
-    existingUser = await UserLogin.findOne({ username: username });
-    res.status(201).json(existingUser.balance);
-  } catch (error) {
-    return next(error);
   }
 };

@@ -1,11 +1,4 @@
-import { useState, useEffect } from "react";
-import { createTransaction, getBalance } from "../../api/index.js";
-
-function getToken() {
-  const tokenString = sessionStorage.getItem("token");
-  const userToken = JSON.parse(tokenString);
-  return userToken;
-}
+import { useNavigate } from "react-router-dom";
 
 function getUser() {
   let username = sessionStorage.getItem("username");
@@ -14,60 +7,25 @@ function getUser() {
 }
 
 function Home() {
-
+  const navigate = useNavigate();
   const username = getUser();
 
-  const [form, setForm] = useState({
-    amount: 0,
-    type: "credit",
-    createdBy: username
-  });
-  const [balance, setBalance] = useState(0);
-
-  const token = getToken();
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    createTransaction(token, form);
-  };
-
-  useEffect(() => {
-    getBalance(token, { username: username }).then((res) =>
-      setBalance(res.data)
-    );
-  },);
-
+  const createAcc = () => {
+    navigate(`../createacc`)
+  }
+  const createTrans = () => {
+    navigate(`../createtrans`)
+  }
 
   return (
     <div>
-      <h2>Hello, {username}</h2>
-      <h2>You have a balance of: {balance}</h2>
+      <h1>Hello, {username}</h1>
 
       <div className="App">
         <div className="login-form">
-          <h1>Create Transaction</h1>
-          <form onSubmit={handleSubmit}>
-            <label>
-              Amount:
-              <input
-                type="number"
-                name="amount"
-                value={form.amount || ""}
-                onChange={(e) => setForm({ ...form, amount: e.target.value })}
-              />
-            </label>
-            <label>
-              Type:
-              <select
-                value={form.type || ""}
-                onChange={(e) => setForm({ ...form, type: e.target.value })}
-              >
-                <option value="credit">Credit</option>
-                <option value="debit">Debit</option>
-              </select>
-            </label>
-            <input type="submit" value="Submit" />
-          </form>
+          Would you like to
+          <button onClick={createAcc}>Create an account</button>
+          <button onClick={createTrans}>Create a transaction</button>
         </div>
       </div>
     </div>

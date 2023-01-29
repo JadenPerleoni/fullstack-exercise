@@ -3,7 +3,6 @@ import {
   login,
   validate,
   createTransaction,
-  getBalance,
   createAccount,
 } from "../controllers/users.js";
 
@@ -13,7 +12,6 @@ const router = express.Router();
 router.post("/create",validate, createAccount);
 router.post("/login", login);
 router.get("/validate", validate);
-router.post("/balance", validate, getBalance);
 
 
 router.post("/createtransaction", validate, createTransaction);

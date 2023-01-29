@@ -25,9 +25,3 @@ export const createTransaction = (token, transaction) =>
     },
   });
 
-export const getBalance = (token, username) =>
-  axios.post(`${url}balance`, username, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
