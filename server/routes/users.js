@@ -4,6 +4,7 @@ import {
   validate,
   createTransaction,
   createAccount,
+  getAccounts
 } from "../controllers/users.js";
 
 const router = express.Router();
@@ -12,6 +13,8 @@ const router = express.Router();
 router.post("/create",validate, createAccount);
 router.post("/login", login);
 router.get("/validate", validate);
+
+router.post("/getaccounts", validate, getAccounts);
 
 
 router.post("/createtransaction", validate, createTransaction);

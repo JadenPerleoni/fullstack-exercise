@@ -15,11 +15,10 @@ export const createAccount = async (req, res) => {
       { username: username },
       { $push: newAccount }
     );
-    res.status(201).json({newAccount });
+    res.status(201).json({ newAccount });
   } catch (error) {
     res.status(409).json({ message: error.message });
   }
-
 };
 
 // Checks if user exists and if password is correct, then generates jwt
@@ -112,5 +111,16 @@ export const createTransaction = async (req, res) => {
     } catch (error) {
       res.status(401).json(error.message);
     }
+  }
+};
+
+export const getAccounts = async (req, res, next) => {
+  let { username } = req.body;
+
+  try {
+    let user = await UserLogin.findOne({ username: username });
+    res.status(201).json(user.accounts);
+  } catch (error) {
+    res.status(401).json(error.message);
   }
 };

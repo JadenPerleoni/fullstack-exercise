@@ -2,8 +2,7 @@
     display:flex;
     align-items: center;
     justify-content: center;
-    height: 500px;
-    width: 90%;
+    height: 400px;
     
 
 }
@@ -23,3 +22,16 @@ button,input,select {
     margin: 8px 0;
     box-sizing: border-box;
 }
+table {
+    border: 2px solid forestgreen;
+    width: 400px;
+    height: 200px;
+  }
+    
+  th {
+    border-bottom: 1px solid black;
+  }
+    
+  td {
+    text-align: center;
+  }

@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
-import { createTransaction } from "../../api/index.js";
-
+import { createTransaction, getAccounts } from "../../api/index.js";
 
 function getToken() {
   const tokenString = sessionStorage.getItem("token");
@@ -9,38 +8,59 @@ function getToken() {
 }
 
 function getUser() {
-
-
   let username = sessionStorage.getItem("username");
   username = JSON.parse(username);
   return username;
 }
 
 function Createtrans() {
-
   const username = getUser();
+  const token = getToken();
 
   const [form, setForm] = useState({
     amount: 0,
     type: "credit",
-    createdBy: username
+    createdBy: username,
   });
 
-  const token = getToken();
+  const [accounts, setAccounts] = useState([]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
     createTransaction(token, form);
   };
 
+  useEffect(() => {
+    getAccounts(token, { username: username }).then((res) =>
+      setAccounts(res.data)
+    );
+  }, [token, username]);
   // TODO: get accounts
-
-
 
   return (
     <div>
       <h2>Hello, {username}</h2>
-      <h2>Available accounts: {}</h2>
+      <h2>Your accounts:</h2>
+      <table>
+        <tr>
+          <th>Account id</th>
+          <th>Account number</th>
+          <th>Balance</th>
+        </tr>
+      {accounts.map((account,key) => {
+        return (
+          <tr key = {key}>
+            <td>{account.accountId}</td>
+            <td>{account.accountNumber}</td>
+            <td>${account.balance}</td>
+
+          </tr>
+        )
+      })}
+      </table>
+
+
+      <h2>Past transactions: {}</h2>
 
       <div className="App">
         <div className="login-form">

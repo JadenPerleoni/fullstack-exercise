@@ -1,11 +1,12 @@
 import axios from "axios";
 const url = "http://localhost:5000/users/";
 
-export const createAccount = (token,newUser) => axios.post(`${url}/create`, newUser, {
-  headers: {
-    Authorization: `Bearer ${token}`,
-  },
-});
+export const createAccount = (token, newUser) =>
+  axios.post(`${url}/create`, newUser, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
 export const login = (user) =>
   axios.post(`${url}/login`, user).then((res) => {
     // Stores the auth token in session storage
@@ -25,3 +26,9 @@ export const createTransaction = (token, transaction) =>
     },
   });
 
+export const getAccounts = (token, username) =>
+  axios.post(`${url}/getaccounts`, username, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
