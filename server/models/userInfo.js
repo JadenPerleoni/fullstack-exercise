@@ -1,12 +1,39 @@
 import mongoose from "mongoose";
-import TransactionData from "./transactionData.js";
+import crypto from "crypto";
 
-const userSchema = mongoose.Schema({
-  username: String,
-  password: String,
-  accounts: [{accountId: String, accountNumber: Number, balance: Number}]
+const accountSchema = mongoose.Schema({
+  accountNumber: {
+    type: Number,
+    required: true,
+    default: function () {
+      return parseInt(crypto.randomBytes(8).toString("hex"), 16)
+        .toString()
+        .slice(0, 16);
+    },
+    unique: true,
+  },
+  accountId: {
+    type: String,
+    required: true,
+  },
+  balance: {
+    type: Number,
+    required: true,
+  },
 });
 
-const UserLogin = mongoose.model('UserLogin',userSchema);
+const userSchema = mongoose.Schema({
+  username: {
+    type: String,
+    required: true,
+  },
+  password: {
+    type: String,
+    required: true,
+  },
+  accounts: [accountSchema],
+});
+
+const UserLogin = mongoose.model("UserLogin", userSchema);
 
 export default UserLogin;

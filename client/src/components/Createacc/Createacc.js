@@ -1,19 +1,30 @@
 import { useState } from "react";
+import { createAccount } from "../../api/index.js";
 
-import generateUniqueId from "generate-unique-id";;
+function getToken() {
+  const tokenString = sessionStorage.getItem("token");
+  const userToken = JSON.parse(tokenString);
+  return userToken;
+}
 
+function getUser() {
+  let username = sessionStorage.getItem("username");
+  username = JSON.parse(username);
+  return username;
+}
 
-
-// TODO: Generate random unique account number?
 function Createacc() {
+  const username = getUser();
   const [form, setForm] = useState({
+    username: username,
     accountId: "",
-    accountNumber: "",
     balance: 0,
   });
-  const handleSubmit = (event) => {
+  const token = getToken();
+  const handleSubmit = async (event) => {
     event.preventDefault();
     console.log(form);
+    await createAccount(token, form);
   };
 
   return (
@@ -28,9 +39,7 @@ function Createacc() {
                 type="text"
                 name="accountid"
                 value={form.accountId || ""}
-                onChange={(e) =>
-                  setForm({ ...form, accountId: e.target.value })
-                }
+                onChange={(e) => setForm({ ...form, accountId: e.target.value })}
               />
             </label>
             <label>
@@ -39,9 +48,7 @@ function Createacc() {
                 type="number"
                 name="balance"
                 value={form.balance || ""}
-                onChange={(e) =>
-                  setForm({ ...form, balance: e.target.value })
-                }
+                onChange={(e) => setForm({ ...form, balance: e.target.value })}
               />
             </label>
 

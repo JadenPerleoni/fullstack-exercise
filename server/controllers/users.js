@@ -1,24 +1,25 @@
 import UserLogin from "../models/userInfo.js";
 import TransactionData from "../models/transactionData.js";
 
-import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 
-dotenv.config();
+export const createAccount = async (req, res) => {
+  let { username } = req.body;
 
-export const createUser = async (req, res) => {
-  const user = req.body;
-  console.log(user);
-  const newUser = new UserLogin(user);
-
+  let newAccount = {
+    accounts: { accountId: req.body.accountId, balance: req.body.balance },
+  };
+  console.log(newAccount);
   try {
-    await newUser.save();
-
-    res.status(201).json(newUser);
+    let user = await UserLogin.findOneAndUpdate(
+      { username: username },
+      { $push: newAccount }
+    );
+    res.status(201).json({ accounts: newAccount });
   } catch (error) {
-    console.log("error: " + error);
-    res.status(409).json({ message: error });
+    res.status(409).json({ message: error.message });
   }
+
 };
 
 // Checks if user exists and if password is correct, then generates jwt
