@@ -18,7 +18,7 @@ function Home() {
   const username = getUser();
 
   const [form, setForm] = useState({
-    amount: "",
+    amount: 0,
     type: "credit",
     createdBy: username
   });
@@ -35,7 +35,7 @@ function Home() {
     getBalance(token, { username: username }).then((res) =>
       setBalance(res.data)
     );
-  }, []);
+  },);
 
 
   return (
@@ -50,7 +50,7 @@ function Home() {
             <label>
               Amount:
               <input
-                type="text"
+                type="number"
                 name="amount"
                 value={form.amount || ""}
                 onChange={(e) => setForm({ ...form, amount: e.target.value })}

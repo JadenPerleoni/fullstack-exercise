@@ -79,33 +79,39 @@ export const validate = async (req, res, next) => {
 };
 
 export const createTransaction = async (req, res) => {
+  let username = req.body.createdBy;
+  let update, user;
+  let createdBy = await UserLogin.findOne({ username: username });
 
-  let createdBy = await UserLogin.findOne({ username: req.body.username });
-  
   const transaction = new TransactionData(req.body);
-
-  let newBalance;
+  let newBalance = 0;
 
   // TODO: check the type of transaction and then subtract/add it from the user's balance.
   if (req.body.type === "credit") {
     try {
-        newBalance = parseInt((parseInt(createdBy.balance) + parseInt(req.body.amount)));
+      await transaction.save();
 
-    } catch(error) {
+      newBalance = parseInt(createdBy.balance) + parseInt(req.body.amount);
+      update = { balance: newBalance };
+      user = await UserLogin.findOneAndUpdate({ username: username }, update);
+
+      res.status(201).json(transaction);
+    } catch (error) {
+      res.status(401).json(error.message);
+    }
+  } else if (req.body.type === "debit") {
+    try {
+      await transaction.save();
+      newBalance = parseInt(createdBy.balance) - parseInt(req.body.amount);
+      update = { balance: newBalance };
+      user = await UserLogin.findOneAndUpdate({ username: username }, update);
+
+      res.status(201).json(transaction);
+    } catch (error) {
       res.status(401).json(error.message);
     }
   }
-  
-
-  try {
-    await transaction.save();
-    res.status(201).json("Transaction was created successfully.");
-    console.log("transaction saved to db");
-  } catch (error) {
-    res.status(401).json(error.message);
-  }
 };
-
 export const getBalance = async (req, res, next) => {
   let { username } = req.body;
   let existingUser;
