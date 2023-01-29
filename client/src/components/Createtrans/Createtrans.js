@@ -16,17 +16,20 @@ function getUser() {
 function Createtrans() {
   const username = getUser();
   const token = getToken();
+  const [accounts, setAccounts] = useState([]);
+
 
   const [form, setForm] = useState({
     amount: 0,
     type: "credit",
-    createdBy: username,
+    accountId: accounts.accountId,
+    username: username
   });
 
-  const [accounts, setAccounts] = useState([]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    console.log(form);
     createTransaction(token, form);
   };
 
@@ -42,23 +45,23 @@ function Createtrans() {
       <h2>Hello, {username}</h2>
       <h2>Your accounts:</h2>
       <table>
-        <tr>
-          <th>Account id</th>
-          <th>Account number</th>
-          <th>Balance</th>
-        </tr>
-      {accounts.map((account,key) => {
-        return (
-          <tr key = {key}>
-            <td>{account.accountId}</td>
-            <td>{account.accountNumber}</td>
-            <td>${account.balance}</td>
-
+        <tbody>
+          <tr>
+            <th>Account id</th>
+            <th>Account number</th>
+            <th>Balance</th>
           </tr>
-        )
-      })}
+          {accounts.map((account, key) => {
+            return (
+              <tr key={key}>
+                <td>{account.accountId}</td>
+                <td>{account.accountNumber}</td>
+                <td>${account.balance}</td>
+              </tr>
+            );
+          })}
+        </tbody>
       </table>
-
 
       <h2>Past transactions: {}</h2>
 
@@ -83,6 +86,26 @@ function Createtrans() {
               >
                 <option value="credit">Credit</option>
                 <option value="debit">Debit</option>
+              </select>
+            </label>
+            <label>
+              Choose account:
+              <select
+                value={form.accountId}
+                onChange={(e) =>
+                  setForm({ ...form, accountId: e.target.value })
+                }
+              >
+
+                <option value = "Select one">Pick an account id </option>
+                {accounts.map((account, key) => {
+                  return (
+                    
+                    <option key={key} value={account.accountId}>
+                      {account.accountId}
+                    </option>
+                  );
+                })}
               </select>
             </label>
             <input type="submit" value="Submit" />

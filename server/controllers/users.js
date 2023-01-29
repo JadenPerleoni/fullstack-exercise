@@ -79,15 +79,16 @@ export const validate = async (req, res, next) => {
   }
 };
 
-export const createTransaction = async (req, res) => {
-  let username = req.body.createdBy;
+export const createTransaction = async (req, res) => {\
+  // TODO: find the user's account in the array and update the balance
+  // CREATE ACCOUNT MODEL
+  let username = req.body.username;
   let update, user;
-  let createdBy = await UserLogin.findOne({ username: username });
+  let user = await UserLogin.findOne({ username: username });
 
   const transaction = new TransactionData(req.body);
   let newBalance = 0;
 
-  // TODO: check the type of transaction and then subtract/add it from the user's balance.
   if (req.body.type === "credit") {
     try {
       await transaction.save();
