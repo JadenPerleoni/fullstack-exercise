@@ -14,8 +14,8 @@ export const validate = (token) =>
       Authorization: `Bearer ${token}`,
     },
   });
-export const createTransaction = (token, amount) =>
-  axios.post(`${url}/createtransaction`, amount, {
+export const createTransaction = (token, transaction) =>
+  axios.post(`${url}/createtransaction`, transaction, {
     headers: {
       Authorization: `Bearer ${token}`,
     },

@@ -79,8 +79,9 @@ export const validate = async (req, res, next) => {
 };
 
 export const createTransaction = async (req, res) => {
-  const amount = req.body;
-  const transaction = new TransactionData(amount);
+
+  console.log(req.body)
+  const transaction = new TransactionData(req.body);
 
   try {
     await transaction.save();

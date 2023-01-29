@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { createTransaction,getBalance } from "../../api/index.js";
+import { createTransaction, getBalance } from "../../api/index.js";
 
 function getToken() {
   const tokenString = sessionStorage.getItem("token");
@@ -16,9 +16,9 @@ function getUser() {
 function Home() {
   const [form, setForm] = useState({
     amount: "",
+    type: "credit",
   });
   const [balance, setBalance] = useState(0);
-
 
   const token = getToken();
   const username = getUser();
@@ -29,8 +29,10 @@ function Home() {
   };
 
   useEffect(() => {
-    getBalance(token,{username: username}).then((res) => setBalance(res.data));
-  },[]);
+    getBalance(token, { username: username }).then((res) =>
+      setBalance(res.data)
+    );
+  }, []);
 
   console.log(balance);
 
@@ -51,6 +53,16 @@ function Home() {
                 value={form.amount || ""}
                 onChange={(e) => setForm({ ...form, amount: e.target.value })}
               />
+            </label>
+            <label>
+              Type:
+              <select
+                value={form.type || ""}
+                onChange={(e) => setForm({ ...form, type: e.target.value })}
+              >
+                <option value="credit">Credit</option>
+                <option value="debit">Debit</option>
+              </select>
             </label>
             <input type="submit" value="Submit" />
           </form>
