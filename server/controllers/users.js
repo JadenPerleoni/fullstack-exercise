@@ -22,7 +22,7 @@ export const createAccount = async (req, res) => {
     
     let user = await UserLogin.findOneAndUpdate(
       { username: username },
-      { $push: newAccount }
+      { $push: {accounts: accountData} }
     );
     await accountData.save();
     res.status(201).json({ newAccount });
