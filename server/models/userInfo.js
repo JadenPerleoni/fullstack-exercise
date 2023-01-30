@@ -35,5 +35,6 @@ const userSchema = mongoose.Schema({
 });
 
 const UserLogin = mongoose.model("UserLogin", userSchema);
+export const AccountData = mongoose.model("AccountData", accountSchema);
 
 export default UserLogin;

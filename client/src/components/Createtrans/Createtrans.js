@@ -21,6 +21,7 @@ function Createtrans() {
     amount: 0,
     type: "credit",
     createdBy: username,
+    accountId: "",
   });
 
   const [accounts, setAccounts] = useState([]);
@@ -35,30 +36,30 @@ function Createtrans() {
       setAccounts(res.data)
     );
   }, [token, username]);
-  // TODO: get accounts
 
+  console.log(accounts);
   return (
     <div>
       <h2>Hello, {username}</h2>
       <h2>Your accounts:</h2>
       <table>
-        <tr>
-          <th>Account id</th>
-          <th>Account number</th>
-          <th>Balance</th>
-        </tr>
-      {accounts.map((account,key) => {
-        return (
-          <tr key = {key}>
-            <td>{account.accountId}</td>
-            <td>{account.accountNumber}</td>
-            <td>${account.balance}</td>
-
+        <tbody>
+          <tr>
+            <th>Account id</th>
+            <th>Account number</th>
+            <th>Balance</th>
           </tr>
-        )
-      })}
+          {accounts.map((account, key) => {
+            return (
+              <tr key={key}>
+                <td>{account.accountId}</td>
+                <td>{account.accountNumber}</td>
+                <td>${account.balance}</td>
+              </tr>
+            );
+          })}
+        </tbody>
       </table>
-
 
       <h2>Past transactions: {}</h2>
 
@@ -83,6 +84,24 @@ function Createtrans() {
               >
                 <option value="credit">Credit</option>
                 <option value="debit">Debit</option>
+              </select>
+            </label>
+            <label>
+              Which account:
+              <select
+                value={form.accountId || ""}
+                onChange={(e) =>
+                  setForm({ ...form, accountId: e.target.value })
+                }
+              >
+              <option>Select one</option>
+                {accounts.map((account, key) => {
+                  return (
+                    <option key={key} value={account.accountId}>
+                      {account.accountId}
+                    </option>
+                  );
+                })}
               </select>
             </label>
             <input type="submit" value="Submit" />

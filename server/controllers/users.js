@@ -1,20 +1,30 @@
 import UserLogin from "../models/userInfo.js";
 import TransactionData from "../models/transactionData.js";
+import { AccountData } from "../models/userInfo.js";
 
 import jwt from "jsonwebtoken";
 
 export const createAccount = async (req, res) => {
   let { username } = req.body;
 
+
+
+  const accountData = new AccountData({
+    accountId: req.body.accountId,
+    balance: req.body.balance
+  });
+
   let newAccount = {
     accounts: { accountId: req.body.accountId, balance: req.body.balance },
   };
-  console.log(newAccount);
+  console.log(accountData);
   try {
+    
     let user = await UserLogin.findOneAndUpdate(
       { username: username },
       { $push: newAccount }
     );
+    await accountData.save();
     res.status(201).json({ newAccount });
   } catch (error) {
     res.status(409).json({ message: error.message });
@@ -80,12 +90,13 @@ export const validate = async (req, res, next) => {
 };
 
 export const createTransaction = async (req, res) => {
+
   let username = req.body.createdBy;
   let update, user;
+  let newBalance = 0;
   let createdBy = await UserLogin.findOne({ username: username });
 
   const transaction = new TransactionData(req.body);
-  let newBalance = 0;
 
   // TODO: check the type of transaction and then subtract/add it from the user's balance.
   if (req.body.type === "credit") {
