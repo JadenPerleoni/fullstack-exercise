@@ -23,7 +23,9 @@ function Createtrans() {
     amount: 0,
     type: "credit",
     createdBy: username,
-    accountNumber: 0,
+    accountId: "",
+    note: "",
+    
   });
 
   const handleSubmit = async (event) => {
@@ -88,20 +90,29 @@ function Createtrans() {
             <label>
               Which account:
               <select
-                value={form.accountNumber || ""}
+                value={form.accountId || ""}
                 onChange={(e) =>
-                  setForm({ ...form, accountNumber: e.target.value })
+                  setForm({ ...form, accountId: e.target.value })
                 }
               >
                 <option>Select one</option>
                 {accounts.map((account, key) => {
                   return (
-                    <option key={key} value={account.accountNumber}>
+                    <option key={key} value={account.accountId}>
                       {account.accountId}
                     </option>
                   );
                 })}
               </select>
+            </label>
+            <label>
+              Note:
+              <input
+                type="text"
+                name="note"
+                value={form.note || ""}
+                onChange={(e) => setForm({ ...form, note: e.target.value })}
+              />
             </label>
             <input type="submit" value="Submit" />
           </form>
