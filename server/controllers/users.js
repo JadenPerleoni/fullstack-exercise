@@ -11,7 +11,8 @@ export const createAccount = async (req, res) => {
 
   const accountData = new AccountData({
     accountId: req.body.accountId,
-    balance: req.body.balance
+    balance: req.body.balance,
+    createdBy: req.body.username
   });
 
   let newAccount = {
@@ -90,19 +91,22 @@ export const validate = async (req, res, next) => {
 };
 
 export const createTransaction = async (req, res) => {
-  let username = req.body.createdBy;
+  let {accountNumber} = req.body;
+
+
+  let newBalance = 0;
   let update, user;
-  let createdBy = await UserLogin.findOne({ username: username });
+  let account = await AccountData.findOne({createdBy : req.body.createdBy });
+
 
   const transaction = new TransactionData(req.body);
 
   if (req.body.type === "credit") {
     try {
-      await transaction.save();
-
-      newBalance = parseInt(createdBy.balance) + parseInt(req.body.amount);
+      newBalance = parseInt(account.balance) + parseInt(req.body.amount);
       update = { balance: newBalance };
-      user = await UserLogin.findOneAndUpdate({ username: username }, update);
+      await AccountData.findOneAndUpdate({accountNumber : accountNumber },update);
+      await transaction.save();
 
       res.status(201).json(transaction);
     } catch (error) {
@@ -110,10 +114,10 @@ export const createTransaction = async (req, res) => {
     }
   } else if (req.body.type === "debit") {
     try {
-      await transaction.save();
-      newBalance = parseInt(createdBy.balance) - parseInt(req.body.amount);
+      newBalance = parseInt(account.balance) - parseInt(req.body.amount);
       update = { balance: newBalance };
-      user = await UserLogin.findOneAndUpdate({ username: username }, update);
+      await AccountData.findOneAndUpdate({accountNumber : accountNumber },update);
+      await transaction.save();
 
       res.status(201).json(transaction);
     } catch (error) {
@@ -126,8 +130,8 @@ export const getAccounts = async (req, res, next) => {
   let { username } = req.body;
 
   try {
-    let user = await UserLogin.findOne({ username: username });
-    res.status(201).json(user.accounts);
+    let user = await AccountData.find({ createdBy: username });
+    res.status(201).json(user);
   } catch (error) {
     res.status(401).json(error.message);
   }

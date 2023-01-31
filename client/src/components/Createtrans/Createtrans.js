@@ -18,19 +18,18 @@ function Createtrans() {
   const token = getToken();
   const [accounts, setAccounts] = useState([]);
 
-
   const [form, setForm] = useState({
     amount: 0,
     type: "credit",
     createdBy: username,
-    accountId: "",
+    accountNumber: 0,
   });
 
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(form);
     createTransaction(token, form);
+
   };
 
   useEffect(() => {
@@ -39,28 +38,11 @@ function Createtrans() {
     );
   }, [token, username]);
 
-  console.log(accounts);
   return (
     <div>
       <h2>Hello, {username}</h2>
       <h2>Your accounts:</h2>
       <table>
-        <tbody>
-          <tr>
-            <th>Account id</th>
-            <th>Account number</th>
-            <th>Balance</th>
-          </tr>
-          {accounts.map((account, key) => {
-            return (
-              <tr key={key}>
-                <td>{account.accountId}</td>
-                <td>{account.accountNumber}</td>
-                <td>${account.balance}</td>
-              </tr>
-            );
-          })}
-        </tbody>
         <tbody>
           <tr>
             <th>Account id</th>
@@ -107,15 +89,15 @@ function Createtrans() {
             <label>
               Which account:
               <select
-                value={form.accountId || ""}
+                value={form.accountNumber || ""}
                 onChange={(e) =>
-                  setForm({ ...form, accountId: e.target.value })
+                  setForm({ ...form, accountNumber: e.target.value })
                 }
               >
-              <option>Select one</option>
+                <option>Select one</option>
                 {accounts.map((account, key) => {
                   return (
-                    <option key={key} value={account.accountId}>
+                    <option key={key} value={account.accountNumber}>
                       {account.accountId}
                     </option>
                   );
