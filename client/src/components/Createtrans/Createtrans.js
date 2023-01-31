@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import AccountInfo from "../AccountInfo/AccountInfo.js";
 import { createTransaction, getAccounts } from "../../api/index.js";
 
 function getToken() {
@@ -25,11 +26,12 @@ function Createtrans() {
     accountNumber: 0,
   });
 
-
   const handleSubmit = async (event) => {
     event.preventDefault();
-    createTransaction(token, form);
-
+    await createTransaction(token, form);
+    getAccounts(token, { username: username }).then((res) =>
+      setAccounts(res.data)
+    );
   };
 
   useEffect(() => {
@@ -49,13 +51,10 @@ function Createtrans() {
             <th>Account number</th>
             <th>Balance</th>
           </tr>
+
           {accounts.map((account, key) => {
             return (
-              <tr key={key}>
-                <td>{account.accountId}</td>
-                <td>{account.accountNumber}</td>
-                <td>${account.balance}</td>
-              </tr>
+                <AccountInfo value={account} key = {key}></AccountInfo>
             );
           })}
         </tbody>

@@ -7,12 +7,10 @@ import jwt from "jsonwebtoken";
 export const createAccount = async (req, res) => {
   let { username } = req.body;
 
-
-
   const accountData = new AccountData({
     accountId: req.body.accountId,
     balance: req.body.balance,
-    createdBy: req.body.username
+    createdBy: req.body.username,
   });
 
   let newAccount = {
@@ -20,10 +18,9 @@ export const createAccount = async (req, res) => {
   };
   console.log(accountData);
   try {
-    
     let user = await UserLogin.findOneAndUpdate(
       { username: username },
-      { $push: {accounts: accountData} }
+      { $push: { accounts: accountData } }
     );
     await accountData.save();
     res.status(201).json({ newAccount });
@@ -91,21 +88,26 @@ export const validate = async (req, res, next) => {
 };
 
 export const createTransaction = async (req, res) => {
-  let {accountNumber} = req.body;
-
+  let { accountNumber } = req.body;
 
   let newBalance = 0;
   let update, user;
-  let account = await AccountData.findOne({createdBy : req.body.createdBy });
+  let account = await AccountData.findOne({
+    createdBy: req.body.createdBy,
+    accountNumber: accountNumber,
+  });
 
-
+  console.log(account);
   const transaction = new TransactionData(req.body);
 
   if (req.body.type === "credit") {
     try {
       newBalance = parseInt(account.balance) + parseInt(req.body.amount);
       update = { balance: newBalance };
-      await AccountData.findOneAndUpdate({accountNumber : accountNumber },update);
+      await AccountData.findOneAndUpdate(
+        { accountNumber: accountNumber },
+        update
+      );
       await transaction.save();
 
       res.status(201).json(transaction);
@@ -116,7 +118,10 @@ export const createTransaction = async (req, res) => {
     try {
       newBalance = parseInt(account.balance) - parseInt(req.body.amount);
       update = { balance: newBalance };
-      await AccountData.findOneAndUpdate({accountNumber : accountNumber },update);
+      await AccountData.findOneAndUpdate(
+        { accountNumber: accountNumber },
+        update
+      );
       await transaction.save();
 
       res.status(201).json(transaction);
