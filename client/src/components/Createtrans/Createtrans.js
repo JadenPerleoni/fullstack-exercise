@@ -1,6 +1,12 @@
 import { useState, useEffect } from "react";
 import AccountInfo from "../AccountInfo/AccountInfo.js";
-import { createTransaction, getAccounts } from "../../api/index.js";
+import TransactionInfo from "../TransactionInfo/TransactioInfo.js";
+
+import {
+  createTransaction,
+  getAccounts,
+  getTransactions,
+} from "../../api/index.js";
 
 function getToken() {
   const tokenString = sessionStorage.getItem("token");
@@ -18,6 +24,7 @@ function Createtrans() {
   const username = getUser();
   const token = getToken();
   const [accounts, setAccounts] = useState([]);
+  const [transactions, setTransactions] = useState([]);
 
   const [form, setForm] = useState({
     amount: 0,
@@ -25,7 +32,6 @@ function Createtrans() {
     createdBy: username,
     accountId: "",
     note: "",
-    
   });
 
   const handleSubmit = async (event) => {
@@ -42,6 +48,13 @@ function Createtrans() {
     );
   }, [token, username]);
 
+  useEffect(() => {
+    getTransactions(token, { username: username }).then((res) =>
+        setTransactions(res.data)
+    );
+  }, [token, username]);
+
+
   return (
     <div>
       <h2>Hello, {username}</h2>
@@ -55,14 +68,29 @@ function Createtrans() {
           </tr>
 
           {accounts.map((account, key) => {
-            return (
-                <AccountInfo value={account} key = {key}></AccountInfo>
-            );
+            return <AccountInfo value={account} key={key}></AccountInfo>;
           })}
         </tbody>
       </table>
+      
 
-      <h2>Past transactions: {}</h2>
+      <h2>Past transactions: </h2>
+      <table>
+        <tbody>
+          <tr>
+            <th></th>
+            <th>Id:</th>
+            <th>Date:</th>
+            <th>Transaction Type</th>
+            <th>Account Number</th>
+            <th>Note</th>
+            <th>Amount</th>
+          </tr>
+          {transactions.map((transaction,key) => {
+            return <TransactionInfo value={transaction} key = {key}></TransactionInfo>
+          })}
+        </tbody>
+      </table>
 
       <div className="App">
         <div className="login-form">

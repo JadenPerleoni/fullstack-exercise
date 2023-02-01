@@ -125,12 +125,23 @@ export const createTransaction = async (req, res) => {
   }
 };
 
-export const getAccounts = async (req, res, next) => {
+export const getAccounts = async (req, res) => {
   let { username } = req.body;
 
   try {
-    let user = await AccountData.find({ createdBy: username });
-    res.status(201).json(user);
+    let accounts = await AccountData.find({ createdBy: username });
+    res.status(201).json(accounts);
+  } catch (error) {
+    res.status(401).json(error.message);
+  }
+};
+
+export const getTransactions = async (req, res) => {
+  let { username } = req.body;
+
+  try {
+    let transactions = await TransactionData.find({ createdBy: username });
+    res.status(201).json(transactions);
   } catch (error) {
     res.status(401).json(error.message);
   }

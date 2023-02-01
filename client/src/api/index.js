@@ -32,3 +32,10 @@ export const getAccounts = (token, username) =>
       Authorization: `Bearer ${token}`,
     },
   });
+
+export const getTransactions = (token, username) =>
+  axios.post(`${url}/gettransactions`, username, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
