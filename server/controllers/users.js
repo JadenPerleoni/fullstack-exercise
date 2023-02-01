@@ -88,13 +88,13 @@ export const validate = async (req, res, next) => {
 };
 
 export const createTransaction = async (req, res) => {
-  let { accountId } = req.body;
+  let { accountNumber } = req.body;
 
   let newBalance = 0;
   let update, user;
   let account = await AccountData.findOne({
     createdBy: req.body.createdBy,
-    accountId: accountId,
+    accountNumber: accountNumber,
   });
 
   console.log(account);
@@ -104,7 +104,7 @@ export const createTransaction = async (req, res) => {
     try {
       newBalance = parseInt(account.balance) + parseInt(req.body.amount);
       update = { balance: newBalance };
-      await AccountData.findOneAndUpdate({ accountId: accountId }, update);
+      await AccountData.findOneAndUpdate({ accountNumber: accountNumber }, update);
       await transaction.save();
 
       res.status(201).json(transaction);
@@ -115,7 +115,7 @@ export const createTransaction = async (req, res) => {
     try {
       newBalance = parseInt(account.balance) - parseInt(req.body.amount);
       update = { balance: newBalance };
-      await AccountData.findOneAndUpdate({ accountId: accountId }, update);
+      await AccountData.findOneAndUpdate({ accountNumber: accountNumber }, update);
       await transaction.save();
 
       res.status(201).json(transaction);

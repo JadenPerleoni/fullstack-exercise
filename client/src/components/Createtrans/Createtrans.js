@@ -30,7 +30,7 @@ function Createtrans() {
     amount: 0,
     type: "credit",
     createdBy: username,
-    accountId: "",
+    accountNumber: 0,
     note: "",
   });
 
@@ -39,6 +39,9 @@ function Createtrans() {
     await createTransaction(token, form);
     getAccounts(token, { username: username }).then((res) =>
       setAccounts(res.data)
+    );
+    getTransactions(token, { username: username }).then((res) =>
+      setTransactions(res.data)
     );
   };
 
@@ -50,10 +53,9 @@ function Createtrans() {
 
   useEffect(() => {
     getTransactions(token, { username: username }).then((res) =>
-        setTransactions(res.data)
+      setTransactions(res.data)
     );
   }, [token, username]);
-
 
   return (
     <div>
@@ -72,13 +74,11 @@ function Createtrans() {
           })}
         </tbody>
       </table>
-      
 
       <h2>Past transactions: </h2>
       <table>
         <tbody>
           <tr>
-            <th></th>
             <th>Id:</th>
             <th>Date:</th>
             <th>Transaction Type</th>
@@ -86,8 +86,10 @@ function Createtrans() {
             <th>Note</th>
             <th>Amount</th>
           </tr>
-          {transactions.map((transaction,key) => {
-            return <TransactionInfo value={transaction} key = {key}></TransactionInfo>
+          {transactions.map((transaction, key) => {
+            return (
+              <TransactionInfo value={transaction} key={key}></TransactionInfo>
+            );
           })}
         </tbody>
       </table>
@@ -118,15 +120,15 @@ function Createtrans() {
             <label>
               Which account:
               <select
-                value={form.accountId || ""}
+                value={form.accountNumber || ""}
                 onChange={(e) =>
-                  setForm({ ...form, accountId: e.target.value })
+                  setForm({ ...form, accountNumber: e.target.value })
                 }
               >
                 <option>Select one</option>
                 {accounts.map((account, key) => {
                   return (
-                    <option key={key} value={account.accountId}>
+                    <option key={key} value={account.accountNumber}>
                       {account.accountId}
                     </option>
                   );

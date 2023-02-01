@@ -6,7 +6,7 @@ const transactionSchema = mongoose.Schema(
     amount: Number,
     type: String,
     createdBy: String,
-    accountId: String,
+    accountNumber: Number,
     note: String,
     id: Number,
     createdAt: Date,
