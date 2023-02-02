@@ -39,14 +39,13 @@ function Createacc() {
   return (
     <div>
       <div className="account-content">
-        <h2>Your accounts:</h2>
         
             {accounts.map((account, key) => {
               return <AccountInfo value={account} key={key}></AccountInfo>;
             })}
       </div>
-      <div className="App">
-        <div className="login-form">
+      <div>
+        {/* <div className="login-form">
           <h1>Create Account</h1>
           <form onSubmit={handleSubmit}>
             <label>
@@ -72,7 +71,7 @@ function Createacc() {
 
             <input type="submit" value="Submit" />
           </form>
-        </div>
+        </div> */}
       </div>
     </div>
   );

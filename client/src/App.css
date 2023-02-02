@@ -13,6 +13,10 @@
     align-items: center;
     justify-content: center;
     margin-bottom: 20px;
+    position: absolute;
+    left: 230px;
+    top: 0;
+    height: 100%;
     
 }
 .sidebar {
@@ -58,9 +62,17 @@ button,input,select {
   position: absolute;
   left: 230px;
   top: 0;
-  height: 100%;  
+  height: 100%;
+  display: flex;
+  width: 1040px;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
 }
 .account-info {
-  color: red;
-  flex: 0;
+  margin: 10px;
+  background-color: #fff;
+  overflow: hidden;
+  width: 300px;
+  height: 25%;
+  border: 2px solid black;
 }
