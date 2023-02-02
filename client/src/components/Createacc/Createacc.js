@@ -28,6 +28,9 @@ function Createacc() {
     event.preventDefault();
     console.log(form);
     await createAccount(token, form);
+    getAccounts(token, { username: username }).then((res) =>
+      setAccounts(res.data)
+    );
   };
 
   useEffect(() => {
@@ -39,13 +42,12 @@ function Createacc() {
   return (
     <div>
       <div className="account-content">
-        
-            {accounts.map((account, key) => {
-              return <AccountInfo value={account} key={key}></AccountInfo>;
-            })}
+        {accounts.map((account, key) => {
+          return <AccountInfo value={account} key={key}></AccountInfo>;
+        })}
       </div>
-      <div>
-        {/* <div className="login-form">
+      <div className="container">
+        <div className="login-form">
           <h1>Create Account</h1>
           <form onSubmit={handleSubmit}>
             <label>
@@ -59,6 +61,7 @@ function Createacc() {
                 }
               />
             </label>
+
             <label>
               Balance:
               <input
@@ -71,7 +74,7 @@ function Createacc() {
 
             <input type="submit" value="Submit" />
           </form>
-        </div> */}
+        </div>
       </div>
     </div>
   );

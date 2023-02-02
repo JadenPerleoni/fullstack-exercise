@@ -16,18 +16,18 @@ function Home() {
   const [transactionsClicked, setTransactionsClicked] = useState(false);
 
   const createAcc = () => {
-    if(transactionsClicked) {
-      setTransactionsClicked(!transactionsClicked)
+    if (transactionsClicked) {
+      setTransactionsClicked(!transactionsClicked);
     }
-    
+
     setAccountsClicked(!accountsClicked);
     // navigate(`../createacc`);
   };
   const createTrans = () => {
-    if(accountsClicked) {
-      setAccountsClicked(!accountsClicked)
+    if (accountsClicked) {
+      setAccountsClicked(!accountsClicked);
     }
-    
+
     setTransactionsClicked(!transactionsClicked);
     // navigate(`../createtrans`);
   };
@@ -39,29 +39,33 @@ function Home() {
         <hr></hr>
         <div className="sidebar-content">
           <button
+            className="button-style"
             onClick={createAcc}
             style={{
-              backgroundColor: accountsClicked ? "#349beb" : "rgb(223, 228, 231)",
+              backgroundColor: accountsClicked
+                ? "#349beb"
+                : "rgb(223, 228, 231)",
               color: accountsClicked ? "rgb(223, 228, 231)" : "",
             }}
           >
             Accounts
           </button>
           <button
+            className="button-style"
             onClick={createTrans}
             style={{
-              backgroundColor: transactionsClicked ? "#349beb" : "rgb(223, 228, 231)",
+              backgroundColor: transactionsClicked
+                ? "#349beb"
+                : "rgb(223, 228, 231)",
               color: transactionsClicked ? "rgb(223, 228, 231)" : "",
-
             }}
           >
             Transactions
           </button>
         </div>
-            
       </div>
-            {accountsClicked ? <Createacc></Createacc> : ""}
-            {transactionsClicked ? <Createtrans></Createtrans> : ""}
+      {accountsClicked ? <Createacc></Createacc> : ""}
+      {transactionsClicked ? <Createtrans></Createtrans> : ""}
 
       <div className="App"></div>
     </div>
