@@ -1,5 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { createAccount } from "../../api/index.js";
+import AccountInfo from "../AccountInfo/AccountInfo.js";
+import { getAccounts } from "../../api/index.js";
 
 function getToken() {
   const tokenString = sessionStorage.getItem("token");
@@ -15,6 +17,7 @@ function getUser() {
 
 function Createacc() {
   const username = getUser();
+  const [accounts, setAccounts] = useState([]);
   const [form, setForm] = useState({
     username: username,
     accountId: "",
@@ -27,8 +30,21 @@ function Createacc() {
     await createAccount(token, form);
   };
 
+  useEffect(() => {
+    getAccounts(token, { username: username }).then((res) =>
+      setAccounts(res.data)
+    );
+  }, [token, username]);
+
   return (
     <div>
+      <div className="account-content">
+        <h2>Your accounts:</h2>
+        
+            {accounts.map((account, key) => {
+              return <AccountInfo value={account} key={key}></AccountInfo>;
+            })}
+      </div>
       <div className="App">
         <div className="login-form">
           <h1>Create Account</h1>
@@ -39,7 +55,9 @@ function Createacc() {
                 type="text"
                 name="accountid"
                 value={form.accountId || ""}
-                onChange={(e) => setForm({ ...form, accountId: e.target.value })}
+                onChange={(e) =>
+                  setForm({ ...form, accountId: e.target.value })
+                }
               />
             </label>
             <label>

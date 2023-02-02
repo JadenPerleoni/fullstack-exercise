@@ -1,10 +1,10 @@
 export default function AccountInfo(props) {
   return (
-    <tr key = {props.value.key}>
-      <td>{props.value.accountId}</td>
-      <td>{props.value.accountNumber}</td>
-      <td>{props.value.balance}</td>
-
-    </tr>
+    <div key={props.value.key} className="account-info">
+      Account Number
+      {props.value.accountId}
+      {props.value.accountNumber}
+      {props.value.balance}
+    </div>
   );
 }

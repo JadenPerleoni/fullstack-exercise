@@ -15,23 +15,52 @@
     margin-bottom: 20px;
     
 }
+.sidebar {
+  height: 100%;
+  width: 230px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  overflow-x: hidden;
+  text-align: center;
+  border: 2px solid black;
+  border-top: 0;
+  display: block;
+  }
+  
+  .sidebar-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 
+hr {
+  border-top: 2px solid black;
+
+}
+.home-user {
+  width: 100%;
+  font-size: 24px;
+}
 button,input,select {
-    width: 100%;
+    width: 70%;
+    background-color: rgb(223, 228, 231);
+
     padding: 12px 20px;
     margin: 8px 0;
+    border: none;
     box-sizing: border-box;
 }
-table {
-    border: 2px solid forestgreen;
-    width: 400px;
-    height: 200px;
-  }
-    
-  th {
-    border-bottom: 1px solid black;
-  }
-    
-  td {
-    text-align: center;
-  }
+
+.account-content {
+
+  position: absolute;
+  left: 230px;
+  top: 0;
+  height: 100%;  
+}
+.account-info {
+  color: red;
+  flex: 0;
+}

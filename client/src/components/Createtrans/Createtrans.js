@@ -59,22 +59,26 @@ function Createtrans() {
 
   return (
     <div>
-      <h2>Hello, {username}</h2>
-      <h2>Your accounts:</h2>
-      <table>
-        <tbody>
-          <tr>
-            <th>Account id</th>
-            <th>Account number</th>
-            <th>Balance</th>
-          </tr>
+      <div className="account-content">
+        <h2>Your accounts:</h2>
+        <table>
+          <tbody>
+            <tr>
+              <th>Account id</th>
+              <th>Account number</th>
+              <th>Balance</th>
+            </tr>
 
-          {accounts.map((account, key) => {
-            return <AccountInfo value={account} key={key}></AccountInfo>;
-          })}
-        </tbody>
-      </table>
-
+            {accounts.map((account, key) => {
+              return (
+                <div className="account-info">
+                  <AccountInfo value={account} key={key}></AccountInfo>
+                </div>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
       <h2>Past transactions: </h2>
       <table>
         <tbody>
