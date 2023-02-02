@@ -6,7 +6,7 @@ export default function TransactionInfo (props) {
       <td>{props.value.type}</td>
       <td>{props.value.accountNumber}</td>
       <td>{props.value.note}</td>
-      <td>{props.value.amount}</td>
+      <td>{(props.value.type === "credit") ? "+" : "-" }{props.value.amount}</td>
     </tr>
   );
 }

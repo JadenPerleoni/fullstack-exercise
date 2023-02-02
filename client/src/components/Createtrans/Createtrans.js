@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import AccountInfo from "../AccountInfo/AccountInfo.js";
 import TransactionInfo from "../TransactionInfo/TransactioInfo.js";
 
 import {
@@ -46,60 +45,42 @@ function Createtrans() {
   };
 
   useEffect(() => {
+    getTransactions(token, { username: username }).then((res) =>
+      setTransactions(res.data)
+    );
+  }, [token, username]);
+  useEffect(() => {
     getAccounts(token, { username: username }).then((res) =>
       setAccounts(res.data)
     );
   }, [token, username]);
 
-  useEffect(() => {
-    getTransactions(token, { username: username }).then((res) =>
-      setTransactions(res.data)
-    );
-  }, [token, username]);
-
   return (
     <div>
-      <div className="account-content">
-        <h2>Your accounts:</h2>
+      <div className="transaction-content">
         <table>
           <tbody>
             <tr>
-              <th>Account id</th>
-              <th>Account number</th>
-              <th>Balance</th>
+              <th>Id:</th>
+              <th>Date:</th>
+              <th>Transaction Type</th>
+              <th>Account Number</th>
+              <th>Note</th>
+              <th>Amount</th>
             </tr>
-
-            {accounts.map((account, key) => {
+            {transactions.map((transaction, key) => {
               return (
-                <div className="account-info">
-                  <AccountInfo value={account} key={key}></AccountInfo>
-                </div>
+                <TransactionInfo
+                  value={transaction}
+                  key={key}
+                ></TransactionInfo>
               );
             })}
           </tbody>
         </table>
       </div>
-      <h2>Past transactions: </h2>
-      <table>
-        <tbody>
-          <tr>
-            <th>Id:</th>
-            <th>Date:</th>
-            <th>Transaction Type</th>
-            <th>Account Number</th>
-            <th>Note</th>
-            <th>Amount</th>
-          </tr>
-          {transactions.map((transaction, key) => {
-            return (
-              <TransactionInfo value={transaction} key={key}></TransactionInfo>
-            );
-          })}
-        </tbody>
-      </table>
-
-      <div className="App">
-        <div className="login-form">
+      <div className="container">
+        <div className="trans-form">
           <h1>Create Transaction</h1>
           <form onSubmit={handleSubmit}>
             <label>
