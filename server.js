@@ -4,8 +4,6 @@ import cors from "cors";
 import mongoose from "mongoose";
 import users from "./routes/users.js";
 import dotenv from "dotenv";
-import path from "path"
-
 dotenv.config();
 
 const dbUser = process.env.DB_USERNAME;
@@ -19,9 +17,6 @@ app.use("/users", users);
 
 
 
-app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
-});
 
 const uri = `mongodb+srv://${dbUser}:${dbPassword}@fullstack-excersise.d8dsh10.mongodb.net/?retryWrites=true&w=majority`;
 const PORT = process.env.PORT || 5000;
