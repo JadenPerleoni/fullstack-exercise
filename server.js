@@ -4,16 +4,25 @@ import cors from "cors";
 import mongoose from "mongoose";
 import users from "./routes/users.js";
 import dotenv from "dotenv";
+import path from "path";
+import {fileURLToPath} from 'url';
+
+
 dotenv.config();
 
 const dbUser = process.env.DB_USERNAME;
 const dbPassword = process.env.DB_PASSWORD;
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 
 const app = express();
 
 app.use(bodyParser.json());
 app.use(cors());
 app.use("/users", users);
+app.use(express.static(path.join(__dirname, '../client/build')));
+
 
 
 
