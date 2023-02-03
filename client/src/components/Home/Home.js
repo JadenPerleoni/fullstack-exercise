@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import Createacc from "../Createacc/Createacc";
 import Createtrans from "../Createtrans/Createtrans";
@@ -10,7 +9,6 @@ function getUser() {
 }
 
 function Home() {
-  const navigate = useNavigate();
   const username = getUser();
   const [accountsClicked, setAccountsClicked] = useState(false);
   const [transactionsClicked, setTransactionsClicked] = useState(false);
