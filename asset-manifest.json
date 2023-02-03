@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.css": "/fullstack-exercise/client/static/css/main.88cb61d5.css",
-    "main.js": "/fullstack-exercise/client/static/js/main.15e7f7fe.js",
-    "index.html": "/fullstack-exercise/client/index.html",
-    "main.88cb61d5.css.map": "/fullstack-exercise/client/static/css/main.88cb61d5.css.map",
-    "main.15e7f7fe.js.map": "/fullstack-exercise/client/static/js/main.15e7f7fe.js.map"
+    "main.css": "/fullstack-exercise/static/css/main.88cb61d5.css",
+    "main.js": "/fullstack-exercise/static/js/main.15e7f7fe.js",
+    "index.html": "/fullstack-exercise/index.html",
+    "main.88cb61d5.css.map": "/fullstack-exercise/static/css/main.88cb61d5.css.map",
+    "main.15e7f7fe.js.map": "/fullstack-exercise/static/js/main.15e7f7fe.js.map"
   },
   "entrypoints": [
     "static/css/main.88cb61d5.css",
