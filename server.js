@@ -19,10 +19,10 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 app.use("/users", users);
-app.use(express.static(path.join(__dirname, "/build")));
+app.use(express.static(path.join(__dirname, "./client/build")));
 
 app.get("*", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "/build", "index.html"));
+  res.sendFile(path.resolve(__dirname, "./client/build", "index.html"));
 });
 
 const uri = `mongodb+srv://${dbUser}:${dbPassword}@fullstack-excersise.d8dsh10.mongodb.net/?retryWrites=true&w=majority`;
