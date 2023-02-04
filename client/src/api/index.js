@@ -1,5 +1,5 @@
 import axios from "axios";
-const url = "https://goldfish-app-oi436.ondigitalocean.app/";
+const url = "https://goldfish-app-oi436.ondigitalocean.app/users";
 
 export const createAccount = (token, newUser) =>
   axios.post(`${url}/create`, newUser, {
